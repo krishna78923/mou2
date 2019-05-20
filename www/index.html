@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<!-- <script type="text/javascript" src="Calculator.js"></script> -->
+<style type="text/css">
+	
+		#container,#container2{
+			height: 500px;
+			width: 100%;
+			background-image: url("images/mobileLogin.jpg");
+			
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+		#containerdrug{
+			height: 500px;
+			width: 100%;
+			background-image: url("images/background.jpg");
+			
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+		#containerquiz{
+			height: 500px;
+			width: 100%;
+			background-image: url("images/medical.jpg");
+			
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+		#containerquiz2{
+			height: 500px;
+			width: 100%;
+			background-image: url("images/medical.jpg");
+			
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+
+
+</style>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript">
+	var counting;
+	$(document).ready(function(){
+		$("#txtsign").css({'padding-top':'35%','padding-left':'10%'});
+		$("#txtsign2").css({'padding-top':'35%','padding-left':'10%'});
+
+		$("#btnans1").on("tap",function(){
+		  $("#btnans1").css({"background-color":"green"});
+		});
+		$("#btnans2").on("tap",function(){
+			$("#btnans1").css({"background-color":"green"});
+		  $("#btnans2").css({"background-color":"red"});
+		});
+
+			$("#btnans3").on("tap",function(){
+			$("#btnans1").css({"background-color":"green"});
+		  $("#btnans3").css({"background-color":"red"});
+		});
+			$("#btnans4").on("tap",function(){
+			$("#btnans1").css({"background-color":"green"});
+		  $("#btnans4").css({"background-color":"red"});
+		});
+	});
+</script>
+<script type="text/javascript">
+	var countrow;
+	document.addEventListener("deviceready", onDeviceReady, false);
+var db;
+function onDeviceReady(){
+ db=window.openDatabase("myUserDB", "1.0", "Simple Demo", 2*1024*1024);
+ db.transaction(createDB, errorCB, successCB);
+
+}
+function createDB(tx){
+ tx.executeSql('CREATE TABLE IF NOT EXISTS user(id INT, username TEXT, password TEXT,email TEXT)');
+}
+function errorCB(err){
+ alert("SQL Error: "+err.code);
+}
+function successCB(){
+ // alert("Database & Table Created");
+}
+function submitForm(){
+ db.transaction(insertDB, errorCB);
+ $.mobile.changePage( "#page1", { transition: "slideup", changeHash: false });
+ return false;
+}
+
+function insertDB(tx){
+ var username_c=$("#username2").val();
+ var password_c=$("#password2").val();
+ var email_c=$("#email").val();
+ var sql='INSERT INTO user (username,password,email) VALUES (?,?,?)';
+ tx.executeSql(sql,[username_c,password_c,email_c], successQueryDB, errorCB);
+}
+
+function successQueryDB(tx){
+ alert("Insert Successful");
+ // tx.executeSql('SELECT * FROM book', [], renderListCB, errorCB);
+}
+
+function renderListCB(tx, results){
+ var htmlString = ' ';
+ var len = results.rows.length;
+ for(var i=0; i<len;i++){
+ htmlString+='<li>'+results.rows.item(i).username+'<br>'+results.rows.item(i).password+'<br>'+results.rows.item(i).email+'</li>';
+ }
+ $('#resultList').html(htmlString);
+ $('#resultList').listview('refresh');
+}
+
+function test1(){
+	alert("piti");
+}
+function selectDB(tx){
+ var sql='SELECT * FROM user';
+  tx.executeSql(sql, [], renderListCB, errorCB);
+}
+function viewclick(){
+	db.transaction(selectDB, errorCB);
+ $.mobile.changePage( "#pageview", { transition: "slideup", changeHash: false });
+ return false;
+}
+
+
+// function validateLogin(tx){
+// 	var sql="select count(id) where username="+$("#username").val().toString()+"and password="+$("#password").val().toString();
+// 		var count =tx.executeSql(sql);
+
+// }
+function loginclick(){
+	 db.transaction(checkifuser, errorCB);
+	 // alert("success");
+	 // alert(counting);
+	
+}
+function checkifuser(tx){
+	var sql ="select count(id) from user where username='"+$("#username").val()+"'"+"and password='"+$("#username").val()+"'";
+	tx.executeSql(sql,[], getLengthCB, errorCB);
+	
+}
+// function testr(tx){
+// 		var sql ="select count(*) from user ;"
+// 	tx.executeSql(sql,[], getLengthCB, errorCB);
+	
+
+function getLengthCB(tx, results){
+	var len = results.rows.length;
+	alert(len);
+	if(parseInt(len)==1){
+		 $.mobile.changePage( "#pagelogged", { transition: "slideup", changeHash: false });
+ return false;
+	}
+}
+
+
+
+function Test(){
+   
+    var x;
+    db.readTransaction(function (t) {
+    	var us=$("#username").val();
+    	var pwd=$("#password").val();
+        t.executeSql("SELECT COUNT(*) AS c FROM user where username='"+us+"'"+" and password='"+pwd+"'", [], function (t, r) {
+            window.countrow= r.rows[0].c; 
+            if(parseInt(countrow)==0){
+            	// alert("not found");
+            	$("#errormdf").html("Your Login details are invalid");
+            	
+            }
+             else if(parseInt(countrow)==1){
+            	// alert("found");
+            	backbtn("#pagequiz3");
+            }
+            x= r.rows[0].c;
+        });
+    });
+    return true;
+
+}
+function alertnum(){
+	if(Test()==true){
+		window.location.href="indexDrug.html";
+	}
+}
+
+
+function backbtn(pageid){
+	 $.mobile.changePage( pageid, { transition: "slideup", changeHash: false });
+ return false;
+}
+
+
+
+// function showDocCount(db) {
+//   db.readTransaction(function (t) {
+//     t.executeSql('SELECT COUNT(*) AS c FROM docids', [], function (t, r) {
+//       alert(r.rows[0].c);
+//     }, function (t, e) {
+//       // couldn't read database
+//       alert('(unknown: ' + e.message + ')');
+//     });
+//   });
+// }
+
+// prepareDatabase(function(db) {
+//   // got database
+//   var span = document.getElementById('doc-count');
+//   showDocCount(db, span);
+// }, function (e) {
+//   // error getting database
+//   alert(e.message);
+// });
+
+
+
+
+
+</script>
+</head>
+<body>
+	  
+
+<div data-role="page" data-theme="b" id="page1">
+
+	<div data-role="header">
+		<h1>Page Title</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<form method="POST">
+			<input type="submit" value="viewList" onclick="return viewclick()" data-theme="b">
+		</form>
+		<div id="container">
+			<p id='txtsign' style="color:black;">Sign In</p>
+			<form method="POST">
+			<label for="text-basic">Username:</label>
+<input type="text" name="text-basic" id="username" value="" placeholder="Username">
+<br>
+<label for="text-basic">Password:</label>
+<input type="password" name="text-basic" id="password" value="" placeholder="Password">
+<br>
+<input type="submit" value="Submit"  data-theme="b" onclick="return alertnum()">
+<!-- <input type="submit" value="Submit"  data-theme="b" onclick="return loginclick()"> -->
+<form>
+		<p id="errormdf" style="color:red;"></p>
+	<p><a href="#bar" style="color:black;">Don't have account? Sign up now</a></p>
+		</div>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+
+
+<!-- Start of second page -->
+<div data-role="page" id="bar" data-theme="b">
+
+	<div data-role="header">
+		<h1>Bar</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<div id="container2">
+			<p id='txtsign2' style="color:black;">Sign Up</p>
+			<form method="POST">
+			<label for="text-basic">Username:</label>
+<input type="text" name="text-basic" id="username2" value="" placeholder="Username">
+<br>
+<label for="text-basic">Password:</label>
+<input type="password" name="text-basic" id="password2" value="" placeholder="Password">
+<label for="text-basic">Email:</label>
+<input type="text" name="text-basic" id="email" value="" placeholder="Email">
+<br>
+<input type="submit" value="Sign Up"  data-theme="b" onclick="return submitForm()">
+<form>
+
+	<p ><a href="#page1" style="color:black;">Already have account? Sign in now</a></p>
+		</div>
+	
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+
+
+
+
+<!-- page view List   -->
+<div data-role="page" id="pageview">
+ <div data-role="header">
+ <h1>user Details</h1>
+ </div>
+ <div data-role="main" class="ui-content">
+ <div id="output"><ul data-role="listview" id="resultList"></ul></div>
+ <button class="ui-btn" onclick="return backbtn('#page1')" data-theme='b'>Back</button>
+		
+
+ </div>
+ <div data-role="footer">
+ <h1>Working with SQLite</h1>
+ </div>
+</div>
+
+<!-- page logged in -->
+<div data-role="page" id="pagelogged">
+ <div data-role="header">
+ <h1>user Details</h1>
+ </div>
+ <div data-role="main" class="ui-content">
+ <p>You have sucessfully logged in</p>
+  </div>
+ <div data-role="footer">
+ <h1>Working with SQLite</h1>
+ </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	   
+</script>

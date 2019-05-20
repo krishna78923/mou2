@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<!-- <script type="text/javascript" src="Calculator.js"></script> -->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	// function movearrow(selectedDosage,dose,pxAmount){
+	// 	if(selectedDose==dose){
+ //        	$("#arrowIndicator").css({"top":pxAmount});
+ //        }
+	// }
+	$("#ratings").hide();
+	$("#arrowIndicator").hide();
+    $("#selectOptions").change(function(){
+        var selectedDose = $("#selectOptions").children("option:selected").val();
+
+        if(selectedDose=="10"){
+        	$("#arrowIndicator").css({"top":"290px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("Average or Low");
+        	$("#ratings").css({"top":"300px"});
+        }
+         if(selectedDose=="5"){
+        	$("#arrowIndicator").css({"top":"320px"});
+        	$("#ratings").show();
+        	$("#ratingspara").text("Low");
+        	$("#arrowIndicator").show();
+
+        	$("#ratings").css({"top":"350px","left":"20px"});
+
+        }
+         if(selectedDose=="20"){
+        	$("#arrowIndicator").css({"top":"255px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("medium");
+        	$("#ratings").css({"top":"250px"});
+        }
+         if(selectedDose=="40"){
+        	$("#arrowIndicator").css({"top":"205px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("High Average");
+        	$("#ratings").css({"top":"190px"});
+        }
+        if(selectedDose=="60"){
+        	$("#arrowIndicator").css({"top":"160px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("High ");
+        	$("#ratings").css({"top":"140px"});
+        }
+         if(selectedDose=="80"){
+        	$("#arrowIndicator").css({"top":"115px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("Very High ");
+        	$("#ratings").css({"top":"100px"});
+
+        }
+         if(selectedDose=="100"){
+        	$("#arrowIndicator").css({"top":"70px"});
+        	$("#ratings").show();
+        	$("#arrowIndicator").show();
+        	$("#ratingspara").text("Extremely High ");
+        	$("#ratings").css({"top":"70px"});
+        }
+
+    });
+
+	});
+
+</script>
+<script type="text/javascript" src="cordova.js"></script>
+<style type="text/css">
+	#containerMeter{
+			height: 500px;
+			width: 100%;
+			margin-left: 22px;
+
+		}
+		#div1{
+			height: 50px;
+			width: 50px;
+			border-top-left-radius: 50%;
+			border-top-right-radius: 50%;
+			margin-left: 35%;
+			background-color: #f44242;
+		}
+		#div2{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-color: #f46841;
+		}
+		#div3{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-color: #f48e41;
+		}
+		#ratingspara{
+			color:;
+		}
+		#ratings{
+			background-color: blue ;
+		}
+		#div4{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-color: #f4b241;
+		}
+		#div4{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-color: #f4d041;
+		}
+		#div5{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-color: #f1f441;
+		}
+
+		#div6{
+			height: 50px;
+			width: 50px;
+			margin-left: 35%;
+			background-image: linear-gradient(#d3f441, #41eef4);
+		}
+		#div7{
+			height: 100px;
+			width: 100px;
+			border-radius: 100%;
+			background-color:#41eef4;
+			margin-left: 25%;
+			 position: absolute;
+  top: 350px;
+
+		}
+		#arrowIndicator{
+			transform :rotate(75deg);
+			position: absolute;
+			top:70px;
+			left:55%;
+		}
+		#ratings{
+			width: 100px;height:80px;
+			border: 1px solid red; border-radius:5px;
+			position: absolute;
+			top : 70px;
+		}
+		.measurements{
+			border-bottom: 1px solid #eff3f9;
+			width: 50px;
+			position: absolute;
+		}
+		#div11{
+			left:210px;
+			top:70px;
+		}
+		#div12{
+			left:210px;
+			top:115px;
+		}
+		#div13{
+			left:210px;
+			top:160px;
+		}
+		#div14{
+			left:210px;
+			top:205px;
+		}
+		#div15{
+			left:210px;
+			top:255px;
+		}
+		#div16{
+			left:210px;
+			top:290px;
+		}
+		#div17{
+			left:210px;
+			top:320px;
+		}
+</style>
+</head>
+<body>
+
+	<div data-role="page">
+
+	<div data-role="header" style="background-color: #48f442;">
+		<h1>DrugMeter</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content" id='container' style="background-color:#05821e;">
+
+
+			<div id="containerMeter">
+		<div id="div1"></div>
+		<div id="div2"></div>
+		<div id="div3"></div>
+		<div id="div4"></div>
+		<div id="div5"></div>
+		<div id="div6"></div>
+		<div id="div7"></div>
+
+		<img src="images/arrow.png" id='arrowIndicator' height="50px" width="60px" >
+		<span id="ratings" > <label id="ratingspara" for="select-native-17"></label></p></span>
+
+		<label id="div11" class="measurements">100mg</label>
+		<div id="div12" class="measurements">80mg</div>
+		<div id="div13" class="measurements">60mg</div>
+		<div id="div14" class="measurements">40mg</div>
+		<div id="div15" class="measurements">20mg</div>
+		<div id="div16" class="measurements">10mg</div>
+		<div id="div17" class="measurements">5mg</div>
+
+	</div>
+
+
+
+	</div><!-- /content -->
+<form>
+<div class="ui-field-contain">
+    <label for="select-native-17">Select how much drug you consume on a daily basis :</label><br>
+    <select name="select-native-17" id="selectOptions">
+        <option value="100">100mg</option>
+        <option value="80">80mg</option>
+        <option value="60" selected="selected">60mg</option>
+        <option value="40">40mg</option>
+		 <option value="20">20mg</option>
+		 <option value="10">10mg</option>
+		<option value="5">5mg</option>
+    </select>
+</div>
+</form>
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+
+
+</body>
+</html>
